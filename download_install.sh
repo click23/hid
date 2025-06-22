@@ -6,8 +6,8 @@ fi
 
 checkOS() {
     # List of supported distributions
-    supported_distros=("Ubuntu" "Debian" "Fedora" "CentOS" "Arch" "Debian GNU/Linux 12")
-    #supported_distros=("Ubuntu")
+    #supported_distros=("Ubuntu" "Debian" "Fedora" "CentOS" "Arch" "Debian GNU/Linux 12")
+    supported_distros=("Debian GNU/Linux 12")
     # Get the distribution name and version
     if [[ -f "/etc/os-release" ]]; then
         source "/etc/os-release"

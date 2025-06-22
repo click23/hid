@@ -16,16 +16,6 @@ checkOS() {
     else
         echo "Unable to determine distribution."
         exit 1
-    fi
-    # Check if the distribution is supported
-    if [[ " ${supported_distros[@]} " == " ${distro_name} " ]]; then
-        echo "Your Linux distribution is ${distro_name} ${distro_version}"
-        : #no-op command
-    else
-        # Print error message in red
-        echo -e "\e[31mYour Linux distribution (${distro_name} ${distro_version}) is not currently supported.\e[0m"
-        exit 1
-    fi
     
     # This script only works on Ubuntu 22 and above
     if [ "$(uname)" == "Linux" ]; then

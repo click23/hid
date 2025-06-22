@@ -3,25 +3,14 @@
 if [[ "$VER" != "" ]];then
     set -- $VER  $@
 
-fi
 
-echo "$0 input params are $@"
-
-
-if [[ " $@ " != *"--no-gui"* ]] &&  [[ "$0" == "bash" ]]; then
-    echo "This script is deprecated! Please use the following command"
-    echo ""
-    echo "bash <(curl https://i.hiddify.com/$1)"
-    echo ""
-    exit 1
-fi
 
 echo "Downloading '$@'"
 
-if [[ " $@ " == *" v8 "* ]]; then
-    sudo bash -c "$(curl -sLfo- https://raw.githubusercontent.com/click23/hid/refs/heads/main/download_install.sh)"
-    exit $?
-fi
+
+sudo bash -c "$(curl -sLfo- https://raw.githubusercontent.com/click23/hid/refs/heads/main/download_install.sh)"
+exit $?
+
 
 
 mkdir -p /tmp/hiddify/

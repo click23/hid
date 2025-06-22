@@ -7,7 +7,7 @@ fi
 checkOS() {
     # List of supported distributions
     #supported_distros=("Ubuntu" "Debian" "Fedora" "CentOS" "Arch" "Debian GNU/Linux 12")
-    supported_distros=("Debian GNU/Linux 12")
+    supported_distros=("Ubuntu")
     # Get the distribution name and version
     if [[ -f "/etc/os-release" ]]; then
         source "/etc/os-release"
@@ -18,7 +18,7 @@ checkOS() {
         exit 1
     fi
     # Check if the distribution is supported
-    if [[ " ${supported_distros[@]} " =~ " ${distro_name} " ]]; then
+    if [[ " ${supported_distros[@]} " == " ${distro_name} " ]]; then
         echo "Your Linux distribution is ${distro_name} ${distro_version}"
         : #no-op command
     else

@@ -5,25 +5,22 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 checkOS() {
-    # List of supported distributions
-    #supported_distros=("Ubuntu" "Debian" "Fedora" "CentOS" "Arch" "Debian GNU/Linux 12")
-    supported_distros=("Ubuntu")
-    # Get the distribution name and version
-    if [[ -f "/etc/os-release" ]]; then
-        source "/etc/os-release"
+    supported_distros="Ubuntu"
+    if [ -f "/etc/os-release" ]; then
+        . /etc/os-release
         distro_name=$NAME
         distro_version=$VERSION_ID
     else
         echo "Unable to determine distribution."
         exit 1
-    
-    # This script only works on Ubuntu 22 and above
-    if [ "$(uname)" == "Linux" ]; then
-        version_info=$(lsb_release -rs | cut -d '.' -f 1)
-        # Check if it's Ubuntu and version is below 22
-        if [ "$(lsb_release -is)" == "Ubuntu" ] && [ "$version_info" -lt 22 ]; then
+    fi
+
+    # Only proceed if on Linux
+    if [ "$(uname)" = "Linux" ]; then
+        version_info=$(echo "$distro_version" | cut -d '.' -f 1)
+        if [ "$distro_name" = "Ubuntu" ] && [ "$version_info" -lt 22 ]; then
             echo "This script only works on Ubuntu 22 and above"
-            exit
+            exit 1
         fi
     fi
 }

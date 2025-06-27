@@ -5,44 +5,25 @@ if [ "$(id -u)" -ne 0 ]; then
 fi
 
 checkOS() {
-    # Optional: List of supported distributions (leave empty to allow any)
-    supported_distros=("Ubuntu" "Debian" "Fedora" "CentOS" "Arch")
-
-    # Check if /etc/os-release exists
+    # List of supported distributions
+    #supported_distros=("Ubuntu" "Debian" "Fedora" "CentOS" "Arch" "Debian GNU/Linux 12")
+    supported_distros=("Ubuntu")
+    # Get the distribution name and version
     if [[ -f "/etc/os-release" ]]; then
-        # Load OS details
         source "/etc/os-release"
-        distro_name="$NAME"
-        distro_version="$VERSION_ID"
+        distro_name=$NAME
+        distro_version=$VERSION_ID
     else
-        echo "Unable to determine Linux distribution. /etc/os-release not found."
+        echo "Unable to determine distribution."
         exit 1
-    fi
-
-    echo "Detected OS: $distro_name $distro_version"
-
-    # If supported_distros is not empty, check if the current distro is supported
-    if [[ ${#supported_distros[@]} -gt 0 ]]; then
-        is_supported=false
-        for distro in "${supported_distros[@]}"; do
-            if [[ "$distro_name" == "$distro" ]]; then
-                is_supported=true
-                break
-            fi
-        done
-
-        if [[ "$is_supported" != true ]]; then
-            echo "Unsupported distribution: $distro_name"
-            exit 1
-        fi
-    fi
-
-    # Optional: Version check (example for Ubuntu 22 and above)
-    if [[ "$distro_name" == "Ubuntu" ]]; then
-        major_version=$(echo "$distro_version" | cut -d'.' -f1)
-        if [[ "$major_version" -lt 22 ]]; then
-            echo "This script only supports Ubuntu version 22 or above."
-            exit 1
+    
+    # This script only works on Ubuntu 22 and above
+    if [ "$(uname)" == "Linux" ]; then
+        version_info=$(lsb_release -rs | cut -d '.' -f 1)
+        # Check if it's Ubuntu and version is below 22
+        if [ "$(lsb_release -is)" == "Ubuntu" ] && [ "$version_info" -lt 22 ]; then
+            echo "This script only works on Ubuntu 22 and above"
+            exit
         fi
     fi
 }

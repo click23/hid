@@ -1,16 +1,7 @@
 #!/bin/bash
-
-if [[ "$VER" != "" ]];then
-    set -- $VER  $@
-
-
-
 echo "Downloading '$@'"
 
-
 sudo bash -c "$(curl -sLfo- https://raw.githubusercontent.com/click23/hid/refs/heads/main/download_install.sh)"
-exit $?
-
 
 
 mkdir -p /tmp/hiddify/
